@@ -15,7 +15,9 @@ export default function Home() {
         <Navbar />
           <div className="mb-12">
             <Image
-              src="profile.jpg"
+              src="/profile.jpg"
+              width={128}
+              height={128}
               alt="Mathew Stormblessed"
               className="w-32 h-32 rounded-full mx-auto mb-4"
             />
