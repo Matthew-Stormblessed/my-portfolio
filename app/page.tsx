@@ -1,25 +1,26 @@
 import Head from "next/head";
 import Image from "next/image";
 import Navbar from "@/components/navbar";
+import Link from "next/link";
 
 export default function Home() {
   return (
     <>
       <Head>
-        <title>Mathew Stormblessed | Software Engineer</title>
-        <meta name="description" content="Portfolio of Mathew Stormblessed" />
+        <title>Matthew Johnson | Software Engineer</title>
+        <meta name="description" content="Portfolio of Matthew Johnson" />
       </Head>
 
       <main className="min-h-screen bg-gray-900 text-white px-6 py-16">
         <div className="max-w-3xl mx-auto text-center">
         <Navbar />
-          <div className="mb-12">
+          <div className="mb-12 mt-12 flex">
             <Image
               src="/profile.jpg"
               width={128}
               height={128}
               alt="Mathew Stormblessed"
-              className="w-32 h-32 rounded-full mx-auto mb-4"
+              className=" rounded-full mx-auto mb-4"
             />
           </div>
           <h1 className="text-4xl md:text-6xl font-bold mb-4">
@@ -28,12 +29,12 @@ export default function Home() {
           <p className="text-xl md:text-2xl mb-8">
             A Software Engineer who builds modern web experiences with React, TypeScript, and automation.
           </p>
-          <a
-            href="#projects"
+          <Link
+            href="/projects"
             className="inline-block bg-blue-500 hover:bg-blue-600 text-white font-semibold px-6 py-3 rounded-lg transition"
           >
             View My Work
-          </a>
+          </Link>
         </div>
 
         <section id="about" className="mt-24 text-left max-w-2xl mx-auto">
