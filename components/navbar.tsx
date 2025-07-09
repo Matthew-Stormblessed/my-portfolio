@@ -13,14 +13,17 @@ const Navbar = () => {
         <Link href="/" className="h-full flex items-center hover:bg-gray-300">
           <span className="transition-colors text-gray-900 px-3 h-full flex items-center">Home</span>
         </Link>
-        <Link href="#about" className="h-full flex items-center hover:bg-gray-300">
+        <Link href="About" className="h-full flex items-center hover:bg-gray-300">
           <span className="transition-colors text-gray-900 px-3 h-full flex items-center">About</span>
         </Link>
         <Link href="projects" className="h-full flex items-center hover:bg-gray-300">
           <span className="transition-colors text-gray-900 px-3 h-full flex items-center">Projects</span>
         </Link>
-        <Link href="#contact" className="h-full flex items-center hover:bg-gray-300">
+        <Link href="Contact" className="h-full flex items-center hover:bg-gray-300">
           <span className="transition-colors text-gray-900 px-3 h-full flex items-center">Contact</span>
+        </Link>
+        <Link href="actions" className="h-full flex items-center hover:bg-gray-300">
+          <span className="transition-colors text-gray-900 px-3 h-full flex items-center">CI/CD</span>
         </Link>
       </div>
     </nav>
