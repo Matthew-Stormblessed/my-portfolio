@@ -36,13 +36,6 @@ export default function Home() {
             View My Work
           </Link>
         </div>
-
-        <section id="about" className="mt-24 text-left max-w-2xl mx-auto">
-          <h2 className="text-2xl font-bold mb-4">About Me</h2>
-          <p className="text-lg text-gray-300 leading-relaxed">
-            I'm passionate about building full-stack applications, automating workflows with GitHub Actions, and writing clean, type-safe code. I enjoy working with modern web technologies like Next.js, Tailwind, and serverless APIs.
-          </p>
-        </section>
       </main>
     </>
   );
