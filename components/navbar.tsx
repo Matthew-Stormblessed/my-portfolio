@@ -23,7 +23,7 @@ const Navbar = () => {
           <span className="transition-colors text-gray-900 px-3 h-full flex items-center">Contact</span>
         </Link>
         <Link href="actions" className="h-full flex items-center hover:bg-gray-300">
-          <span className="transition-colors text-gray-900 px-3 h-full flex items-center">CI/CD</span>
+          <span className="transition-colors text-gray-900 px-3 h-full flex items-center">Github Actions</span>
         </Link>
       </div>
     </nav>
