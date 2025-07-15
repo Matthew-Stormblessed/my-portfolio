@@ -43,16 +43,16 @@ const Navbar = () => {
       {/* Mobile dropdown menu */}
       {menuOpen && (
         <div className="absolute top-16 left-0 w-full bg-white shadow-md flex flex-col items-center gap-2 py-4 md:hidden z-50 animate-fade-in">
-          <Link href="/" className="w-full text-center py-2 hover:bg-gray-200 text-gray-900" onClick={() => setMenuOpen(false)}>
+          <Link href="/" className="w-full text-center py-2 hover:bg-gray-200 text-gray-900 border-b border-gray-300" onClick={() => setMenuOpen(false)}>
             Home
           </Link>
-          <Link href="/About" className="w-full text-center py-2 hover:bg-gray-200 text-gray-900" onClick={() => setMenuOpen(false)}>
+          <Link href="/About" className="w-full text-center py-2 hover:bg-gray-200 text-gray-900 border-b border-gray-300" onClick={() => setMenuOpen(false)}>
             About
           </Link>
-          <Link href="/projects" className="w-full text-center py-2 hover:bg-gray-200 text-gray-900" onClick={() => setMenuOpen(false)}>
+          <Link href="/projects" className="w-full text-center py-2 hover:bg-gray-200 text-gray-900 border-b border-gray-300" onClick={() => setMenuOpen(false)}>
             Projects
           </Link>
-          <Link href="/Contact" className="w-full text-center py-2 hover:bg-gray-200 text-gray-900" onClick={() => setMenuOpen(false)}>
+          <Link href="/Contact" className="w-full text-center py-2 hover:bg-gray-200 text-gray-900 border-b border-gray-300" onClick={() => setMenuOpen(false)}>
             Contact
           </Link>
           <Link href="/actions" className="w-full text-center py-2 hover:bg-gray-200 text-gray-900" onClick={() => setMenuOpen(false)}>
