@@ -70,11 +70,11 @@ export default function ActionsPage() {
 
             <main className="min-h-screen bg-gray-900 text-white px-6 py-16">
                 <Navbar />
-                <div>
-                    <h1>Latest GitHub Action Runs</h1>
+                <div className="max-w-2xl mx-auto mt-16 bg-gray-800 rounded-lg shadow-lg p-8">
+                    <h1 className="text-3xl font-bold mb-4">Latest GitHub Action Runs</h1>
                     <ul>
                         {runs.map((run) => (
-                            <li key={run.id}>
+                            <li className={`mb-2 hover:underline ${run.conclusion === "success" ? "text-green-500" : "text-red-500"}`} key={run.id}>
                                 <a href={run.html_url} target="_blank" rel="noopener noreferrer">
                                     {run.name} - {run.status}
                                     {run.conclusion ? ` (${run.conclusion})` : ""}

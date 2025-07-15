@@ -1,8 +1,17 @@
+import 'dotenv/config';
 import { test, expect } from '@playwright/test';
 
-//const baseURL = 'https://matthew-johnson-portfolio.netlify.app/';
-const baseURL = 'http://localhost:3000/';
 
+// Determine the base URL based on the environment variable
+let baseURL;
+
+// If the environment variable NEXT_PUBLIC_LOCAL_DEV is not set, use the production URL
+// Otherwise, use the local development URL
+if (!process.env.NEXT_PUBLIC_LOCAL_DEV) {
+  baseURL = 'https://matthew-johnson-portfolio.netlify.app/';
+} else {
+  baseURL = 'http://localhost:3000/';
+}
 
 test('has title', async ({ page }) => {
   await page.goto(baseURL);
@@ -58,50 +67,50 @@ test('has navbar links', async ({ page }) => {
 
 test('navigates to about page', async ({ page }) => {
   await page.goto(baseURL);
-  
+
   // Click on the "About" link in the navbar
   await page.getByRole('link', { name: 'About' }).click();
-  
+
   // Expect to be on the about page
   await expect(page).toHaveURL(`${baseURL}About`);
 });
 
 test('navigates to projects page', async ({ page }) => {
   await page.goto(baseURL);
-  
+
   // Click on the "Projects" link in the navbar
   await page.getByRole('link', { name: 'Projects' }).click();
-  
+
   // Expect to be on the projects page
   await expect(page).toHaveURL(`${baseURL}projects`);
 });
 
 test('navigates to actions page', async ({ page }) => {
   await page.goto(baseURL);
-  
+
   // Click on the "GitHub Actions" link in the navbar
   await page.getByRole('link', { name: 'GitHub Actions' }).click();
-  
+
   // Expect to be on the actions page
   await expect(page).toHaveURL(`${baseURL}actions`);
 });
 
 test('navigates to home page from navbar', async ({ page }) => {
   await page.goto(`${baseURL}About`);
-  
+
   // Click on the "Home" link in the navbar
   await page.getByRole('link', { name: 'Home' }).click();
-  
+
   // Expect to be back on the home page
   await expect(page).toHaveURL(baseURL);
 });
 
 test('navigates to contact page', async ({ page }) => {
   await page.goto(baseURL);
-  
+
   // Click on the "Contact" link in the navbar
   await page.getByRole('link', { name: 'Contact' }).click();
-  
+
   // Expect to be on the contact page
   await expect(page).toHaveURL(`${baseURL}Contact`);
 });
