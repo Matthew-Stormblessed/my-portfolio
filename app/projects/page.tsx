@@ -22,9 +22,9 @@ export default function Projects() {
                         githubUrl="https://github.com/Matthew-Stormblessed/my-portfolio"
                     />
                     <ProjectCard
-                        title="Project 2"
-                        description="Description for project 2"
-                        githubUrl="https://github.com/user/project2"
+                        title="School projects"
+                        description="A collection of my school projects."
+                        githubUrl="https://github.com/Stormblessed39/Projects"
                     />
                     </div>
                 </div>
