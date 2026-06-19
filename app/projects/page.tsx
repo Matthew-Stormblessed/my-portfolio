@@ -22,8 +22,8 @@ export default function Projects() {
                         githubUrl="https://github.com/Matthew-Stormblessed/my-portfolio"
                     />
                     <ProjectCard
-                        title="Portfolio Website"
-                        description="A personal portfolio website showcasing my projects and skills."
+                        title="Pollygot Website"
+                        description="A website that utilizes OpenAI to translate text for the user."
                         githubUrl="https://github.com/Matthew-Stormblessed/pollygot"
                         projectWebsite="https://pollygot99.netlify.app"
                     />
