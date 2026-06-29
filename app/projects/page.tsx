@@ -27,6 +27,12 @@ export default function Projects() {
                         githubUrl="https://github.com/Matthew-Stormblessed/pollygot"
                         projectWebsite="https://pollygot99.netlify.app"
                     />
+                     <ProjectCard
+                        title="PopChoice website"
+                        description="A website that utilizes openai to create embeddings of movie data. Which is then used to suggest movies that the user might like."
+                        githubUrl="https://github.com/Matthew-Stormblessed/PopChoice"
+                        projectWebsite="https://mjpopchoice.netlify.app"
+                    />
                     <ProjectCard
                         title="School projects"
                         description="A collection of my school projects."
