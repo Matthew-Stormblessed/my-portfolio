@@ -34,6 +34,12 @@ export default function Projects() {
                         projectWebsite="https://mjpopchoice.netlify.app"
                     />
                     <ProjectCard
+                        title="Travel Agent website"
+                        description="A website that utilizes OpenAI agents to provide flight and hotel information to the user."
+                        githubUrl="https://github.com/Matthew-Stormblessed/travel-agent"
+                        projectWebsite="https://mjtravel-agent.netlify.app"
+                    />
+                    <ProjectCard
                         title="School projects"
                         description="A collection of my school projects."
                         githubUrl="https://github.com/Stormblessed39/Projects"
