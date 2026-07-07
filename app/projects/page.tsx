@@ -15,7 +15,7 @@ export default function Projects() {
                 <Navbar />
                 <div>
                     <h1 className="text-3xl font-bold mb-8 mt-3 flex justify-center"> My projects</h1>
-                    <div className="flex flex-col justify-center p-12">
+                    <div className="flex flex-row justify-center p-12 gap-4">
                     <ProjectCard
                         title="Portfolio Website"
                         description="A personal portfolio website showcasing my projects and skills."
