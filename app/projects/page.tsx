@@ -1,5 +1,4 @@
 import Head from "next/head";
-import Image from "next/image";
 import Navbar from "@/components/navbar";
 import ProjectCard from "@/components/projectCard";
 
@@ -15,34 +14,27 @@ export default function Projects() {
                 <Navbar />
                 <div>
                     <h1 className="text-3xl font-bold mb-8 mt-3 flex justify-center"> My projects</h1>
-                    <div className="flex flex-row justify-center p-12 gap-4">
-                    <ProjectCard
-                        title="Portfolio Website"
-                        description="A personal portfolio website showcasing my projects and skills."
-                        githubUrl="https://github.com/Matthew-Stormblessed/my-portfolio"
-                    />
-                    <ProjectCard
-                        title="Pollygot Website"
-                        description="A website that utilizes OpenAI to translate text for the user."
-                        githubUrl="https://github.com/Matthew-Stormblessed/pollygot"
-                        projectWebsite="https://pollygot99.netlify.app"
-                    />
+                    <div className="flex lg:flex-row sm:flex-col items-center justify-center p-12 gap-4">
                      <ProjectCard
-                        title="PopChoice website"
-                        description="A website that utilizes openai to create embeddings of movie data. Which is then used to suggest movies that the user might like."
+                        title="PopChoice — AI Movie Recommender"
+                        description="AI-powered movie recommendation platform that uses semantic vector search and large language models to deliver personalized recommendations for groups of users."
                         githubUrl="https://github.com/Matthew-Stormblessed/PopChoice"
                         projectWebsite="https://mjpopchoice.netlify.app"
+                        image="/PopChoice.png"
                     />
                     <ProjectCard
-                        title="Travel Agent website"
-                        description="A website that utilizes OpenAI agents to provide flight and hotel information to the user."
+                        title="AI Travel Planner"
+                        description="AI travel planning assistant that coordinates flights, hotels, and weather through an agent-based workflow to generate personalized trip recommendations."
                         githubUrl="https://github.com/Matthew-Stormblessed/travel-agent"
                         projectWebsite="https://mjtravel-agent.netlify.app"
+                        image="/TravelAgent.png"
                     />
-                    <ProjectCard
-                        title="School projects"
-                        description="A collection of my school projects."
-                        githubUrl="https://github.com/Stormblessed39/Projects"
+                     <ProjectCard
+                        title="Pollyglot — AI Translator"
+                        description="AI-powered translation application featuring a conversational interface for translating text between English, French, Spanish, and Japanese."
+                        githubUrl="https://github.com/Matthew-Stormblessed/pollygot"
+                        projectWebsite="https://pollygot99.netlify.app"
+                        image="/PollyGlot.png"
                     />
                     </div>
                 </div>
