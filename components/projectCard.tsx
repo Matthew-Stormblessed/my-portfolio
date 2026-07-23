@@ -1,5 +1,6 @@
 import React from 'react';
-import Image from "next/image";
+import { motion } from "motion/react"
+import Link from "next/link"
 
 type ProjectCardProps = {
     title: string;
@@ -7,10 +8,12 @@ type ProjectCardProps = {
     githubUrl: string;
     projectWebsite?: string;
     image?: string;
+    dataFile?: string;
 };
 
-const ProjectCard: React.FC<ProjectCardProps> = ({ title, description, githubUrl, projectWebsite, image }) => (
-    <div style={{
+const ProjectCard: React.FC<ProjectCardProps> = ({ title, description, image, dataFile }) => (
+    <Link href={{pathname: "/singleProject", query: { dataFile }}} style={{ textDecoration: 'none' }}>
+    <motion.div whileHover={{ scale: 1.05 }} style={{
         border: '1px solid #eaeaea',
         borderRadius: '8px',
         padding: '1.5rem',
@@ -19,38 +22,14 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ title, description, githubUrl
         background: '#fff',
         maxWidth: 400,
     }
-    } className='flex flex-col items-center'>
+    } className='flex flex-col items-center min-h-70'>
         <h2 style={{ margin: '0 0 0.5rem 0', color: 'black', fontWeight: 'bold' }}>{title}</h2>
-        {image && 
-        <Image src={image} width={300} height={250} className='h-[750px] w-[400px] mb-5' alt={`picture for project ${title}`} />
-        }
+        {image && (
+            <img src={image} alt={title} className="w-full h-170 mb-4" />
+        )}
         <p style={{ margin: '0 0 1rem 0', color: '#555' }}>{description}</p>
-        <a
-            href={githubUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{
-                color: '#0366d6',
-                textDecoration: 'none',
-                fontWeight: 500
-            }}
-        >
-            GitHub
-        </a>
-        {projectWebsite && 
-        <a
-            href={projectWebsite}
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{
-                color: '#0366d6',
-                textDecoration: 'none',
-                fontWeight: 500
-            }}
-        >
-            Live demo
-        </a>}
-    </div>
+    </motion.div>
+    </Link>
 );
 
 export default ProjectCard;

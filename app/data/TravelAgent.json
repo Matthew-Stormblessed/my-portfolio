@@ -1,0 +1,28 @@
+{
+    "title": "AI Travel Planner",
+    "description": "AI travel planning assistant that coordinates flight, hotel, and weather tools through an agent-based workflow to generate personalized trip recommendations.",
+    "githubUrl": "https://github.com/Matthew-Stormblessed/travel-agent",
+    "projectWebsite": "https://mjtravel-agent.netlify.app",
+    "images": [
+      "/TravelPlanner1.png",
+      "/TravelPlanner2.png",
+      "/TravelPlanner3.png"
+    ],
+    "diagram": "/TravelAgentDiagram.svg",
+    "howItWorks": "The user enters their destination, travel dates, and departure location through the React interface. A Next.js API route sends this information to an agent built with the OpenAI Agents SDK. The agent selects and calls custom tools for flights, hotels, and weather, each of which retrieves current information from an external API. The agent combines the tool results into a structured JSON response that the frontend parses and displays as a complete trip recommendation.",
+    "challenges": "The main challenge was making the agent consistently use its tools instead of relying on information from the model itself. This required iterative prompt engineering, clearer tool instructions, and structured output requirements so the response could be reliably parsed and rendered by the frontend.",
+    "techStack": [
+      "React",
+      "Next.js",
+      "JavaScript",
+      "OpenAI Agents SDK",
+      "AI Agents",
+      "Tool Calling",
+      "Prompt Engineering",
+      "Structured Outputs",
+      "REST APIs",
+      "Weather API",
+      "Flight API",
+      "Hotel API"
+    ]
+  }

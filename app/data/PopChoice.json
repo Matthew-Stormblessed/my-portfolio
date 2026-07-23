@@ -1,0 +1,27 @@
+{
+    "title": "PopChoice — AI Movie Recommender",
+    "description": "AI-powered movie recommendation platform that uses semantic vector search and large language models to deliver personalized recommendations for groups of users.",
+    "githubUrl": "https://github.com/Matthew-Stormblessed/PopChoice",
+    "projectWebsite": "https://mjpopchoice.netlify.app",
+    "images": [
+      "/PopChoice1.png",
+      "/PopChoice2.png",
+      "/PopChoice3.png"
+    ],
+    "diagram": "/PopChoiceDiagram.svg",
+    "howItWorks": "The app collects movie preferences from each person in the group and combines their responses into a single text representation. OpenAI converts that text into an embedding, which is compared against a Supabase pgvector database containing embeddings for approximately 100 movies. The most similar movies are retrieved through a vector similarity search and enriched with posters and metadata from the TMDB API. OpenAI then generates a personalized summary explaining why each movie matches the group's preferences.",
+    "challenges": "The main challenge was refining the prompts and retrieval flow so that each recommendation was relevant to the entire group rather than focusing too heavily on a single preference.",
+    "techStack": [
+      "React",
+      "Next.js",
+      "JavaScript",
+      "OpenAI",
+      "Embeddings",
+      "Semantic Search",
+      "RAG",
+      "Supabase",
+      "PostgreSQL",
+      "pgvector",
+      "TMDB API"
+    ]
+  }

@@ -1,0 +1,23 @@
+{
+    "title": "Pollyglot — AI Translator",
+    "description": "AI-powered translation application featuring a conversational interface for translating text between English, French, Spanish, and Japanese.",
+    "githubUrl": "https://github.com/Matthew-Stormblessed/pollygot",
+    "projectWebsite": "https://pollygot99.netlify.app",
+    "images": [
+      "/PollyGlot.png"
+    ],
+    "diagram": "/PollyGlotDiagram.svg",
+    "howItWorks": "The user selects a target language and enters text through a chat-style React interface. The message is sent to an Express API, which passes the text and selected language to the OpenAI Chat Completions API. OpenAI returns the translated text, and the result is added to the conversation so the user can continue translating messages within the same interface. Note that the first request will be slower due to using the free version of Render.",
+    "challenges": "The main challenge was making the conversational interface feel natural and easy to use. The application automatically scrolls to the newest message while still allowing users to review earlier translations, creating a smoother chat experience.",
+    "techStack": [
+      "React",
+      "JavaScript",
+      "Express",
+      "Node.js",
+      "OpenAI",
+      "Chat Completions",
+      "REST API",
+      "Figma",
+      "Render"
+    ]
+  }
