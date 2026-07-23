@@ -303,7 +303,16 @@ export async function POST(request: Request) {
           },
         })
       },
-      stopWhen: stepCountIs(10),
+      stopWhen: stepCountIs(5),
+      onError({ error }) {
+        console.error("AI stream error:", error);
+      },
+      
+      providerOptions: {
+        openai: {
+          reasoningEffort: "minimal",
+        },
+      },
     });
 
     return createUIMessageStreamResponse({
