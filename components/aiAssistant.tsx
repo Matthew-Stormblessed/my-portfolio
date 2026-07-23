@@ -166,7 +166,7 @@ export default function AiAssistant() {
 
             <div className='flex flex-col text-[18px] gap-2 mt-auto items-center w-full justify-center'>
                 {status === 'ready' &&
-                    <div className="flex flex-row text-[18px] my-4 gap-2">
+                    <div className="flex flex-row text-[12px] sm:text-[18px] my-4 gap-2">
                         <motion.button onClick={() => {
                             setInputValue("What education does Matthew have?")
                             SendInput("What education does Matthew have?")
