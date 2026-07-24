@@ -13,6 +13,7 @@ type FrontMatter = {
   sourceType?: string;
   sourceTitle?: string;
   sourceUrl?: string;
+  keywords?: string[];
 };
 
 type KnowledgeChunk = {
@@ -103,22 +104,18 @@ function sourceTypeFromFilePath(filePath: string): string {
   return path.basename(filePath, ".md");
 }
 
-/* TODO get keywords from file path
+function keywordsFromFrontMatter(
+  frontMatter: FrontMatter,
+  filePath: string,
+): string {
+  if (frontMatter.keywords && frontMatter.keywords.length > 0) {
+    return frontMatter.keywords.join(", ");
+  }
 
----
-sourceType: project
-sourceTitle: Pollyglot
-sourceUrl: /singleProject?dataFile=.%2Fapp%2Fdata%2FPollyGlot.json
-keywords:
-  - project
-  - projects
-  - portfolio
-  - AI
----
+  return keywordsFromFilePath(filePath);
+}
 
-*/
-
- function keywordsFromFilePath(filePath: string): string {
+function keywordsFromFilePath(filePath: string): string {
   const relativePath = path.relative(KNOWLEDGE_DIRECTORY, filePath);
   const firstDirectory = relativePath.split(path.sep)[0];
 
@@ -198,7 +195,7 @@ async function buildChunks(): Promise<KnowledgeChunk[]> {
     const sourceType =
       frontMatter.sourceType ?? sourceTypeFromFilePath(filePath);
 
-    const keywords = keywordsFromFilePath(filePath);
+    const keywords = keywordsFromFrontMatter(frontMatter, filePath);
 
     const sections = splitMarkdownByHeading(content);
 

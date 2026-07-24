@@ -54,3 +54,16 @@ His recent projects focus on semantic search, AI agents, conversational interfac
 Matthew's strongest skill is quickly adapting to unfamiliar technologies and engineering challenges.
 
 He enjoys understanding how systems work and building complete applications from architecture through deployment.
+
+---
+
+## What certifications or courses has Matthew completed?
+
+Matthew has completed several Scrimba courses and learning paths, including:
+
+- **The AI Engineer Path** — a 114-hour learning path on building practical AI-powered applications
+- **Learn React** — modern React fundamentals and application development
+- **Learn AI Agents** — creating AI agents and agent-based workflows
+- **Learn Context Engineering** — designing and managing effective context for AI systems
+
+Some certificates are issued under the name Isaac. View credentials on the [Certificates](/certificates) page.

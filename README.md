@@ -1,36 +1,130 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Matthew Johnson — Portfolio
 
-## Getting Started
+Personal portfolio site with an AI recruiter assistant powered by retrieval-augmented generation (RAG). Recruiters can ask questions about Matthew's experience, projects, skills, and certifications — the assistant retrieves relevant content from a vector database and responds with cited sources.
 
-First, run the development server:
+Live site: [matthew-johnson-portfolio.netlify.app](https://matthew-johnson-portfolio.netlify.app)
+
+## Tech stack
+
+- **Framework:** Next.js 16 (App Router), React 19, TypeScript, Tailwind CSS
+- **AI:** OpenAI (embeddings + chat), Vercel AI SDK
+- **Database:** Supabase (pgvector for semantic search)
+- **Rate limiting:** Upstash Redis
+- **Testing:** Playwright
+- **CI:** GitHub Actions
+
+## Getting started
+
+### Prerequisites
+
+- Node.js 20+
+- Accounts and keys for OpenAI, Supabase, and Upstash (for the AI chat feature)
+
+### Install and run
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Environment variables
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Create a `.env.local` file in the project root:
 
-## Learn More
+```env
+# OpenAI
+OPENAI_API_KEY=
 
-To learn more about Next.js, take a look at the following resources:
+# Supabase
+NEXT_PUBLIC_SUPABASE_URL=
+SUPABASE_SERVICE_ROLE_KEY=
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+# Upstash (chat rate limiting)
+UPSTASH_REDIS_REST_URL=
+UPSTASH_REDIS_REST_TOKEN=
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+# Optional: GitHub Actions page (client-side API calls)
+NEXT_PUBLIC_GITHUB_TOKEN=
+```
 
-## Deploy on Vercel
+The AI chat endpoint requires OpenAI, Supabase, and Upstash. Other pages work without them.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Knowledge base
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Portfolio content for the AI assistant lives in markdown files under `knowledge/`. Each file can include YAML frontmatter for metadata:
+
+```yaml
+---
+sourceType: project
+sourceTitle: PopChoice
+sourceUrl: /singleProject?dataFile=.%2Fapp%2Fdata%2FPollyGlot.json
+keywords:
+  - project
+  - embeddings
+  - rag
+---
+```
+
+### Ingesting knowledge into Supabase
+
+After adding or updating knowledge files, re-ingest them into the vector database:
+
+```bash
+npm run ingest:knowledge
+```
+
+This script:
+
+1. Reads all `.md` files under `knowledge/`
+2. Splits them into sections by heading
+3. Generates embeddings with OpenAI `text-embedding-3-small`
+4. Replaces all rows in the `portfolio_documents` Supabase table
+
+Run this whenever you change knowledge content or add new pages (like certificates) that the AI should know about.
+
+## Scripts
+
+| Command | Description |
+|---|---|
+| `npm run dev` | Start dev server (Turbopack) |
+| `npm run build` | Production build |
+| `npm run start` | Serve production build |
+| `npm run lint` | Run ESLint |
+| `npm run ingest:knowledge` | Ingest knowledge base into Supabase |
+
+## Testing
+
+Playwright smoke tests cover page navigation and static content. By default they run against the production site:
+
+```bash
+npx playwright test
+```
+
+To test against a local dev server, set `NEXT_PUBLIC_LOCAL_DEV=1` and start the dev server first:
+
+```bash
+NEXT_PUBLIC_LOCAL_DEV=1 npx playwright test
+```
+
+## Project structure
+
+```
+app/                  # Next.js App Router pages and API routes
+  api/chat/           # RAG-powered AI chat endpoint
+  api/getProjectData/ # Project detail data API
+components/           # React components (navbar, AI assistant, etc.)
+knowledge/            # Markdown knowledge base for RAG
+  projects/           # Per-project documentation
+  interview/          # Interview prep content
+  philosophy/         # Engineering philosophy
+lib/                  # Shared utilities (rate limiting)
+public/               # Static assets (images, certificates, icons)
+scripts/              # Knowledge ingestion script
+tests/                # Playwright smoke tests
+```
+
+## Deployment
+
+The site is deployed on Netlify. Pushes to `master` trigger GitHub Actions for build verification and Playwright smoke tests against production.

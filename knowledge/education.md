@@ -1,3 +1,16 @@
+---
+sourceTitle: Education
+keywords:
+  - Education
+  - GPA
+  - University
+  - Classes
+  - Learning
+  - Graduation
+  - Degree
+  - Computer Science
+---
+
 # Education
 
 Matthew earned a Bachelor of Science in Computer Science from Weber State University.

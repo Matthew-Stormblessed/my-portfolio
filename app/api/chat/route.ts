@@ -146,7 +146,8 @@ export async function POST(request: Request) {
         In order to answer questions accurately you can use the get_Matthew_Portfolio_Info provided. Always use it at least once.
         
         - Take the user's query and then create a query to use on the get_Matthew_Portfolio_Info database function
-        - If a response returns nothing useful, run it with a new simple query
+        - If a response returns nothing useful, run it with a new query that is more specific to the user's question
+        - You may run the get_Matthew_Portfolio_Info function again with a lower match_threshold if you are not getting any results
         - If there is info you don't know that you want to mention (like a project name), run it again with a specialized query
         - If a query returns nothing, keep running it with new queries
         - Don't repeat info
@@ -268,8 +269,9 @@ export async function POST(request: Request) {
           description: 'Get info about Matthew',
           inputSchema: z.object({
             query: z.string().describe('The query that the ai has made to get more info'),
+            match_threshold: z.number().optional().default(0.35).describe('The similarity threshold for matching documents'),
           }),
-          execute: async ({ query }) => {
+          execute: async ({ query, match_threshold }) => {
             const response = await client.embeddings.create({
               model: "text-embedding-3-small",
               input: query,
@@ -281,7 +283,7 @@ export async function POST(request: Request) {
               "match_portfolio_documents",
               {
                 query_embedding: queryEmbedding,
-                match_threshold: 0.35,
+                match_threshold: match_threshold,
                 match_count: 5,
               },
             );

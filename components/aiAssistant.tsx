@@ -22,9 +22,11 @@ const welcomeMessages: ChatMessage[] = [{
 
 export default function AiAssistant() {
     const bottomRef = useRef<HTMLDivElement | null>(null);
+    const scrollContainerRef = useRef<HTMLDivElement | null>(null);
     const [inputValue, setInputValue] = useState("");
     const [inputError, setInputError] = useState("");
     const [storageLoaded, setStorageLoaded] = useState(false);
+    const [showGoToBottom, setShowGoToBottom] = useState(false);
 
     const {
         messages,
@@ -44,11 +46,28 @@ export default function AiAssistant() {
         }
     });
 
+    function scrollToBottom() {
+        bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+    }
+
     useEffect(() => {
-        if (bottomRef.current)
-            bottomRef.current.scrollIntoView({ behavior: 'smooth' });
+        scrollToBottom();
+    }, [status]);
 
+    useEffect(() => {
+        const container = scrollContainerRef.current;
+        if (!container) return;
 
+        const updateScrollButton = () => {
+            const distanceFromBottom =
+                container.scrollHeight - container.scrollTop - container.clientHeight;
+            setShowGoToBottom(distanceFromBottom > 80);
+        };
+
+        container.addEventListener("scroll", updateScrollButton);
+        updateScrollButton();
+
+        return () => container.removeEventListener("scroll", updateScrollButton);
     }, [status]);
 
     useEffect(() => {
@@ -108,7 +127,8 @@ export default function AiAssistant() {
             }}>
                 New chat
             </button>
-            <div className="overflow-auto scrollbar-none w-full p-4">
+            <div className="relative flex-1 min-h-0">
+                <div ref={scrollContainerRef} className="overflow-auto scrollbar-none w-full h-full p-4">
                 {messages.map((m, index) => {
 
                     if (index !== messages.length - 1 || m.role !== "assistant") {
@@ -164,6 +184,16 @@ export default function AiAssistant() {
                 }
 
                 <div ref={bottomRef}></div>
+                </div>
+                {showGoToBottom && (
+                    <button
+                        type="button"
+                        onClick={scrollToBottom}
+                        className="absolute bottom-4 right-4 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold py-2 px-4 rounded-full shadow-lg"
+                    >
+                        Go to bottom
+                    </button>
+                )}
             </div>
             {status !== "ready" && !error ?
                 <div className='flex flex-row gap-2 ml-4'>
