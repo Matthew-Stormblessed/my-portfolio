@@ -23,10 +23,8 @@ test('has title', async ({ page }) => {
 test('has home content', async ({ page }) => {
   await page.goto(baseURL);
 
-  // Expect an element with the text "Hi! I'm Matthew Johnson".
-  await expect(page.getByText("Hi, I'm Mathew")).toBeVisible();
-  await expect(page.getByText("A Software Engineer who builds modern web experiences with React, TypeScript, and automation.")).toBeVisible();
-  await expect(page.getByRole('link', { name: 'View My Work' })).toBeVisible();
+  await expect(page.getByText("Hi! I'm Matthew's AI assistant.")).toBeVisible();
+  await expect(page.getByRole('button', { name: 'What education does Matthew have?' })).toBeVisible();
 });
 
 test('has about page content', async ({ page }) => {
@@ -43,8 +41,7 @@ test('has projects page content', async ({ page }) => {
 
   // Expect an element with the text "My projects".
   await expect(page.getByText("My projects").first()).toBeVisible();
-  await expect(page.getByText("A personal portfolio website showcasing my projects and skills.")).toBeVisible();
-  await expect(page.getByRole('link', { name: 'View on GitHub' }).first()).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'AI Travel Planner' })).toBeVisible();
 });
 
 test('has actions page content', async ({ page }) => {
@@ -55,6 +52,14 @@ test('has actions page content', async ({ page }) => {
   await expect(page.getByText("Latest GitHub Action Runs")).toBeVisible();
 });
 
+test('has certificates page content', async ({ page }) => {
+  await page.goto(`${baseURL}certificates`);
+
+  await expect(page.getByRole('heading', { name: 'Scrimba Certificates' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'The AI Engineer Path' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Learn React' })).toBeVisible();
+});
+
 test('has navbar links', async ({ page }) => {
   await page.goto(baseURL);
 
@@ -62,6 +67,7 @@ test('has navbar links', async ({ page }) => {
   await expect(page.getByRole('link', { name: 'Home' })).toBeVisible();
   await expect(page.getByRole('link', { name: 'About' })).toBeVisible();
   await expect(page.getByRole('link', { name: 'Projects' })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'Certificates' })).toBeVisible();
   await expect(page.getByRole('link', { name: 'Github Actions' })).toBeVisible();
 });
 

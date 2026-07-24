@@ -7,7 +7,7 @@ import { openai } from '@ai-sdk/openai';
 
 import type { ChatMessage } from "@/app/types";
 
-import { chatRateLimit } from "@/lib/rate-limit";
+import { getChatRateLimit } from "@/lib/rate-limit";
 
 
 import { createClient } from "@supabase/supabase-js";
@@ -39,28 +39,6 @@ type MessageMetadata = {
   sources?: Source[];
 };
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-const supabaseServiceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
-
-if (!supabaseUrl || !supabaseServiceRoleKey) {
-  throw new Error(
-    "Missing NEXT_PUBLIC_SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY.",
-  );
-}
-
-const supabase = createClient(
-  supabaseUrl,
-  supabaseServiceRoleKey,
-  {
-    auth: {
-      persistSession: false,
-      autoRefreshToken: false,
-    },
-  },
-);
-
-const client = new OpenAI();
-
 function getClientIdentifier(request: Request): string {
   const forwardedFor = request.headers.get("x-forwarded-for");
 
@@ -79,10 +57,27 @@ function getClientIdentifier(request: Request): string {
 
 export async function POST(request: Request) {
   try {
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const supabaseServiceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+
+    if (!supabaseUrl || !supabaseServiceRoleKey) {
+      throw new Error(
+        "Missing NEXT_PUBLIC_SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY.",
+      );
+    }
+
+    const supabase = createClient(supabaseUrl, supabaseServiceRoleKey, {
+      auth: {
+        persistSession: false,
+        autoRefreshToken: false,
+      },
+    });
+    const client = new OpenAI();
+
     const identifier = getClientIdentifier(request);
 
     const rateLimitResult =
-      await chatRateLimit.limit(identifier);
+      await getChatRateLimit().limit(identifier);
 
     if (!rateLimitResult.success) {
       const retryAfterSeconds = Math.max(

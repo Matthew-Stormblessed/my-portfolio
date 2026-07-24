@@ -11,22 +11,20 @@ import { motion } from "motion/react"
 import { ChatMessage } from '@/app/types';
 import MessageSources from './messageSources';
 
+const welcomeMessages: ChatMessage[] = [{
+    id: "welcome_message",
+    role: "assistant",
+    parts: [{
+        type: "text",
+        text: "Hi! I'm Matthew's AI assistant. I can answer questions about his experience, explain how his projects work, and help you determine whether he's a good fit for your team.",
+    }],
+}];
+
 export default function AiAssistant() {
     const bottomRef = useRef<HTMLDivElement | null>(null);
     const [inputValue, setInputValue] = useState("");
     const [inputError, setInputError] = useState("");
-    const [storedConvo, setStoredConvo] = useState<ChatMessage[]>(() => {
-        if (typeof window !== "undefined") {
-            const stored = localStorage.getItem("aiconvo");
-            if (stored) {
-                const parsed = JSON.parse(stored);
-                if (parsed.expiry && parsed.expiry > Date.now()) {
-                    return parsed.messages;
-                }
-            }
-        }
-        return [{ id: "welcome_message", role: "assistant", parts: [{ type: "text", text: "Hi! I'm Matthew's AI assistant. I can answer questions about his experience, explain how his projects work, and help you determine whether he's a good fit for your team." }] }];
-    });
+    const [storageLoaded, setStorageLoaded] = useState(false);
 
     const {
         messages,
@@ -40,7 +38,7 @@ export default function AiAssistant() {
         transport: new DefaultChatTransport({
             api: "/api/chat",
         }),
-        messages: storedConvo,
+        messages: welcomeMessages,
         onError(err) {
             setInputError(err.message);
         }
@@ -54,16 +52,31 @@ export default function AiAssistant() {
     }, [status]);
 
     useEffect(() => {
-        // expiry is set to 24 hours from now
-        if (messages.length > 0 && status === "ready") {
-            localStorage.setItem("aiconvo", JSON.stringify({ messages, expiry: Date.now() + 1000 * 60 * 60 * 24 }));
-        }
+        try {
+            const stored = localStorage.getItem("aiconvo");
 
-    }, [status]);
+            if (stored) {
+                const parsed = JSON.parse(stored);
+
+                if (parsed.expiry && parsed.expiry > Date.now() && Array.isArray(parsed.messages)) {
+                    setMessages(parsed.messages);
+                } else {
+                    localStorage.removeItem("aiconvo");
+                }
+            }
+        } catch {
+            localStorage.removeItem("aiconvo");
+        } finally {
+            setStorageLoaded(true);
+        }
+    }, [setMessages]);
 
     useEffect(() => {
-
-    }, []);
+        // expiry is set to 24 hours from now
+        if (storageLoaded && messages.length > 0 && status === "ready") {
+            localStorage.setItem("aiconvo", JSON.stringify({ messages, expiry: Date.now() + 1000 * 60 * 60 * 24 }));
+        }
+    }, [messages, status, storageLoaded]);
 
     async function SendInput(value?: string) {
         clearError();

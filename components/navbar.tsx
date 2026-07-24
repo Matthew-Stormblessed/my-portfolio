@@ -23,6 +23,9 @@ const Navbar = () => {
         <Link href="/projects" className="h-full flex items-center hover:bg-gray-300">
           <span className="transition-colors text-gray-900 px-3 h-full flex items-center">Projects</span>
         </Link>
+        <Link href="/certificates" className="h-full flex items-center hover:bg-gray-300">
+          <span className="transition-colors text-gray-900 px-3 h-full flex items-center">Certificates</span>
+        </Link>
         <Link href="/Contact" className="h-full flex items-center hover:bg-gray-300">
           <span className="transition-colors text-gray-900 px-3 h-full flex items-center">Contact</span>
         </Link>
@@ -51,6 +54,9 @@ const Navbar = () => {
           </Link>
           <Link href="/projects" className="w-full text-center py-2 hover:bg-gray-200 text-gray-900 border-b border-gray-300" onClick={() => setMenuOpen(false)}>
             Projects
+          </Link>
+          <Link href="/certificates" className="w-full text-center py-2 hover:bg-gray-200 text-gray-900 border-b border-gray-300" onClick={() => setMenuOpen(false)}>
+            Certificates
           </Link>
           <Link href="/Contact" className="w-full text-center py-2 hover:bg-gray-200 text-gray-900 border-b border-gray-300" onClick={() => setMenuOpen(false)}>
             Contact
