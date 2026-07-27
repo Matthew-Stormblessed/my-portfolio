@@ -16,6 +16,14 @@ export default function Projects() {
                 <div>
                     <h1 className="text-3xl font-bold mb-8 mt-3 flex justify-center">My projects</h1>
                     <div className="flex flex-col md:flex-row items-center justify-center p-12 gap-4">
+                    <ProjectCard
+                        title="AI Portfolio Assistant"
+                        description="Built an AI-powered recruiter assistant that answers questions about my experience, projects, and technical skills using semantic retrieval and a curated portfolio knowledge base."
+                        githubUrl="https://github.com/Matthew-Stormblessed/my-portfolio"
+                        projectWebsite="https://matthew-johnson-portfolio.netlify.app"
+                        image="/portfolioAssistant.png"
+                        dataFile="./app/data/PortfolioAssistant.json"
+                    />
                      <ProjectCard
                         title="PopChoice — AI Movie Recommender"
                         description="AI-powered movie recommendation platform that uses semantic vector search and large language models to deliver personalized recommendations for groups of users."
@@ -31,14 +39,6 @@ export default function Projects() {
                         projectWebsite="https://mjtravel-agent.netlify.app"
                         image="/TravelPlanner2.png"
                         dataFile="./app/data/TravelAgent.json"
-                    />
-                     <ProjectCard
-                        title="Pollyglot — AI Translator"
-                        description="AI-powered translation application featuring a conversational interface for translating text between English, French, Spanish, and Japanese."
-                        githubUrl="https://github.com/Matthew-Stormblessed/pollygot"
-                        projectWebsite="https://pollygot99.netlify.app"
-                        image="/PollyGlot.png"
-                        dataFile="./app/data/PollyGlot.json"
                     />
                     </div>
                 </div>

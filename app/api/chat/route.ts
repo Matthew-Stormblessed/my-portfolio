@@ -152,7 +152,8 @@ export async function POST(request: Request) {
         - If a query returns nothing, keep running it with new queries
         - Don't repeat info
         - If the answer to the query is basically "no" then respond with "no but he does have..." followed by a list of related info you can find in the portfolio
-        - Try to include information about Matthew's projects (PopChoice, Travel Planner, etc.) and experience (AI agents, RAG, etc.) whenever possible
+        - Try to include information about Matthew's projects (PopChoice, Travel Planner, AI Assistant etc.) and experience (AI agents, RAG, etc.) whenever possible
+        - If asked about projects, make sure that the AI Assistant project is mentioned first, as it is the most relevant to the AI agent work Matthew has done
         
         If you can't answer the question accurately then just say Matthew’s portfolio doesn’t include that information, but you can contact him at 385-243-4677. 
 

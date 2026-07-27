@@ -80,9 +80,9 @@ export default function SingleProject() {
                 )}
                 <h1>{description}</h1>
                 {images && images.length > 0 && (
-                    <div className="flex flex-col sm:flex-row gap-4 m-4">
+                    <div className="flex flex-col lg:flex-row gap-4 m-4">
                         {images.map((img, index) => (
-                            <Image src={img} width={300} height={250} className='h-[750px] w-[400px] mb-5' alt={`picture for project ${title}`} key={index} />
+                            <Image src={img} width={700} height={450} className='mb-5' alt={`picture for project ${title}`} key={index} />
                         ))}
                     </div>
                 )}
