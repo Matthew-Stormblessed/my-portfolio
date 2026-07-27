@@ -22,7 +22,7 @@ export default function Projects() {
                         githubUrl="https://github.com/Matthew-Stormblessed/my-portfolio"
                         projectWebsite="https://matthew-johnson-portfolio.netlify.app"
                         image="/portfolioAssistant.png"
-                        dataFile="./data/PortfolioAssistant.json"
+                        dataFile="PortfolioAssistant.json"
                     />
                      <ProjectCard
                         title="PopChoice — AI Movie Recommender"
@@ -30,7 +30,7 @@ export default function Projects() {
                         githubUrl="https://github.com/Matthew-Stormblessed/PopChoice"
                         projectWebsite="https://mjpopchoice.netlify.app"
                         image="/PopChoice2.png"
-                        dataFile="./data/PopChoice.json"
+                        dataFile="PopChoice.json"
                     />
                     <ProjectCard
                         title="AI Travel Planner"
@@ -38,7 +38,7 @@ export default function Projects() {
                         githubUrl="https://github.com/Matthew-Stormblessed/travel-agent"
                         projectWebsite="https://mjtravel-agent.netlify.app"
                         image="/TravelPlanner2.png"
-                        dataFile="./data/TravelAgent.json"
+                        dataFile="TravelAgent.json"
                     />
                     </div>
                 </div>
