@@ -3,7 +3,6 @@ import fs from "fs";
 import portfolioAssistant from "@/app/data/PortfolioAssistant.json";
 import popChoice from "@/app/data/PopChoice.json";
 import travelAgent from "@/app/data/TravelAgent.json";
-import pollyglot from "@/app/data/Pollyglot.json";
 
 
 export async function POST(request: Request) {
