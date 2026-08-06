@@ -10,8 +10,10 @@
     "ingest:knowledge": "tsx scripts/ingestion-script.ts"
   },
   "dependencies": {
+    "@ai-sdk/mcp": "^2.0.25",
     "@ai-sdk/openai": "^4.0.15",
     "@ai-sdk/react": "^4.0.27",
+    "@modelcontextprotocol/sdk": "^1.30.0",
     "@openai/agents": "^0.13.4",
     "@supabase/supabase-js": "^2.110.6",
     "@tailwindcss/typography": "^0.5.20",
