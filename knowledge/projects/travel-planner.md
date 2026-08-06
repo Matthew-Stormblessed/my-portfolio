@@ -1,7 +1,7 @@
 ---
 sourceType: project
 sourceTitle: AI Travel Planner
-sourceUrl: /singleProject?dataFile=.%2Fapp%2Fdata%2FTravelAgent.json
+sourceUrl: /singleProject?dataFile=TravelAgent.json
 keywords:
   - project
   - projects
@@ -56,4 +56,4 @@ The largest challenge was ensuring the AI consistently used its tools instead of
 This project taught me how to build reliable AI agent workflows and reinforced the importance of prompt engineering and structured outputs when integrating AI into production applications.
 
 # Project page
-/singleProject?dataFile=.%2Fapp%2Fdata%2FTravelAgent.json
+/singleProject?dataFile=TravelAgent.json

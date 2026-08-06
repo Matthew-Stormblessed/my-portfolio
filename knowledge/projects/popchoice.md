@@ -1,7 +1,7 @@
 ---
 sourceType: project
 sourceTitle: PopChoice
-sourceUrl: /singleProject?dataFile=.%2Fapp%2Fdata%2FPopChoice.json
+sourceUrl: /singleProject?dataFile=PortfolioAssistant.json
 keywords:
   - project
   - projects
@@ -53,4 +53,4 @@ I learned a whole lot about prompt engineering and vector databases. Its insanel
 I would improve retrieval by expanding the movie database, experimenting with hybrid search, and incorporating additional user preferences.
 
 # Project page
-/singleProject?dataFile=.%2Fapp%2Fdata%2FPopChoice.json
+/singleProject?dataFile=PortfolioAssistant.json

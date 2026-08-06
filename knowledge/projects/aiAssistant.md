@@ -1,7 +1,7 @@
 ---
 sourceType: project
 sourceTitle: AI Portfolio Assistant
-sourceUrl: /singleProject?dataFile=.%2Fapp%2Fdata%2FPortfolioAssistant.json
+sourceUrl: /singleProject?dataFile=PortfolioAssistant.json
 keywords:
   - project
   - portfolio
@@ -158,4 +158,4 @@ This project demonstrates experience with:
 - Full-stack application architecture
 
 # Project page
-/singleProject?dataFile=.%2Fapp%2Fdata%2FPortfolioAssistant.json
+/singleProject?dataFile=PortfolioAssistant.json

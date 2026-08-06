@@ -245,7 +245,7 @@ export async function POST(request: Request) {
 
       Here is a link to the project page if you wan't to check it out for yourself.
 
-      [link](https://matthew-johnson-portfolio.netlify.app//singleProject?dataFile=TravelAgent.json)
+      [link](https://matthew-johnson-portfolio.netlify.app/singleProject?dataFile=TravelAgent.json)
 '   
 
 
