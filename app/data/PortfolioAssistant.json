@@ -4,9 +4,9 @@
   "githubUrl": "https://github.com/Matthew-Stormblessed/portfolio",
   "projectWebsite": "https://matthew-johnson-portfolio.netlify.app",
   "images": [
-    "/PortfolioAssistant.png",
-    "/PortfolioAssistant1.png",
-    "/PortfolioAssistant2.png"
+    "/portfolioAssistant.png",
+    "/portfolioAssistant1.png",
+    "/portfolioAssistant2.png"
   ],
   "diagram": "/portfolioAssistantDiagram.png",
   "howItWorks": "Portfolio documents are converted into vector embeddings using the OpenAI Embeddings API and stored in a Supabase pgvector database. When a recruiter asks a question, the application creates an embedding of the query, performs a semantic similarity search to retrieve the most relevant portfolio documents, and provides those results as context to the language model using a retrieval-augmented generation (RAG) workflow. Responses are streamed to the frontend in real time with the Vercel AI SDK, rendered as Markdown, and include citations linking back to the relevant portfolio pages.",
