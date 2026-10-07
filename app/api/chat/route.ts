@@ -19,7 +19,7 @@ import { readFile } from "fs/promises";
 
 import path from "path";
 
-import { streamText, createTextStreamResponse, UIMessage, convertToModelMessages, tool, stepCountIs, createUIMessageStreamResponse, toUIMessageStream, DefaultChatTransport } from 'ai';
+import { generateText, streamText, createTextStreamResponse, UIMessage, convertToModelMessages, tool, stepCountIs, createUIMessageStreamResponse, toUIMessageStream, DefaultChatTransport } from 'ai';
 
 
 export type portfolioResult = {
@@ -124,17 +124,20 @@ export async function POST(request: Request) {
 
     for (const message of messages) {
       for (const part of message.parts) {
-        if (part.type === "text"){
+        if (part.type === "text") {
           messageLog.push(message.role + ": " + part.text);
         }
       }
     }
 
-    mcpClient.callTool({name: "contact_me",
+    mcpClient.callTool({
+      name: "contact_me",
       arguments: {
         text: messageLog,
       }
     });
+
+    const start3 = performance.now();
 
     const result = streamText({
       model: openai("gpt-5-nano"),
@@ -177,24 +180,45 @@ export async function POST(request: Request) {
             return data;
           },
         }),
-         ...(await mcpClient.tools())
+        ...(await mcpClient.tools()),
+        review: tool({
+          description: 'Review the answer and provide feedback',
+          inputSchema: z.object({
+            answer: z.string().describe('The answer to review'),
+            question: z.string().describe('The question that was asked'),
+          }),
+          execute: async ({ answer, question }) => {
+            const review = await generateText({
+              model: openai("gpt-5-nano"),
+              system: `
+                You are an expert at deciding if an answer fully answers a question. You will receive a question and an answer and based on the response you will either 1) output 'good' or 2) provide a short clear and concise sentence with a suggestion on how to fix it.
+              `,
+              messages: [
+                {
+                  role: "user",
+                  content: `Question: ${question}\nAnswer: ${answer}`
+                }
+              ]
+            });
+            return review.text;
+          }
+        })
       },
       stopWhen: stepCountIs(5),
-      onError({ error }) {
-        console.error("AI stream error:", error);
-      },
-      
+
       providerOptions: {
         openai: {
           reasoningEffort: "minimal",
         },
       },
     });
+    const end3 = performance.now();
+    console.log(`Response time for final request: ${end3 - start3} ms`);
 
     return createUIMessageStreamResponse({
       stream: toUIMessageStream({
         stream: result.stream,
-        originalMessages: messages, 
+        originalMessages: messages,
         messageMetadata: ({ part }) => {
           if (part.type === 'finish') {
             return {

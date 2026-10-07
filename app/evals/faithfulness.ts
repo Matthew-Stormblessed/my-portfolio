@@ -34,5 +34,5 @@ export default async function faithfulness({
     { role: "system", content: faithfulnessInstructions },
     { role: "user", content: answer },
   ]);
-  return { key: "faithfulness", score: grade.faithful };
+  return { key: "faithfulness", score: grade.faithful, comment: grade.explanation };
 }

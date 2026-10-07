@@ -11,7 +11,7 @@ keywords:
   - Computer Science
 ---
 
-# Education
+# Matthew Johnson Education
 
 Matthew earned a Bachelor of Science in Computer Science from Weber State University.
 

@@ -4,8 +4,10 @@ import { ChatOpenAI } from "@langchain/openai"
 
 // Grade prompt
 const correctnessInstructions = `You are a teacher grading a quiz. You will be given a QUESTION, the GROUND TRUTH (correct) ANSWER, and the STUDENT ANSWER. Here is the grade criteria to follow:
-(1) Grade the student answers based ONLY on their factual accuracy relative to the ground truth answer. (2) Ensure that the student answer does not contain any conflicting statements.
-(3) It is OK if the student answer contains more information than the ground truth answer, as long as it is factually accurate relative to the  ground truth answer.
+(1) Grade the student answers based ONLY on their factual accuracy relative to the ground truth answer. 
+(2) Ensure that the student answer does not contain any conflicting statements.
+(3) It is OK if the student answer contains more information than the ground truth answer, as long as it is factually accurate relative to the ground truth answer.
+(4) Focus on the total meaning of the student's answer. If the meanings are essentially the same, then the student's answer is correct.
 
 Correctness:
 A correctness value of True means that the student's answer meets all of the criteria.
@@ -43,5 +45,5 @@ export default async function correctness({
     { role: "system", content: correctnessInstructions },
     { role: "user", content: answer },
   ]);
-  return { key: "correctness", score: grade.correct };
+  return { key: "correctness", score: grade.correct, comment: grade.explanation };
 }
