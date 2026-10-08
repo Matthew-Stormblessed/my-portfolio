@@ -51,7 +51,9 @@ export default function AiAssistant() {
     }
 
     useEffect(() => {
-        scrollToBottom();
+        if (status === "ready" || status === "streaming") {
+            scrollToBottom();
+        }
     }, [status]);
 
     useEffect(() => {
@@ -119,122 +121,181 @@ export default function AiAssistant() {
     }
 
     return (
-        <div className='bg-gray-900 h-[90vh] mt-5 flex flex-col'>
-            <button className="bg-blue-500 max-w-30 w-full mx-auto hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-2" onClick={() => {
-                localStorage.removeItem("aiconvo");
-                setMessages([{ id: "welcome_message", role: "assistant", parts: [{ type: "text", text: "Hi! I'm Matthew's AI assistant. I can answer questions about his experience, explain how his projects work, and help you determine whether he's a good fit for your team." }] }]);
-
-            }}>
-                New chat
-            </button>
+        <div className="flex h-[90vh] flex-col rounded-xl border border-white/10 bg-[#0f0f0f] shadow-lg">
+            <div className="flex flex-wrap items-center justify-between gap-4 border-b border-white/10 px-4 py-4 sm:px-6">
+                <div className="flex items-center gap-3">
+                    <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full border border-white/10 bg-[#0a0a0a]">
+                        <Image src={aiSVG} width={22} height={22} alt="AI assistant" />
+                    </div>
+                    <div>
+                        <h3 className="text-lg font-semibold tracking-tight">Ask My AI Assistant</h3>
+                        <p className="text-sm text-white/60">
+                            Powered by retrieval-augmented generation
+                        </p>
+                    </div>
+                </div>
+                <button
+                    className="inline-flex items-center rounded-md border border-white/15 bg-white/5 px-4 py-2 text-sm font-medium text-white transition-colors duration-150 ease-in-out hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white/20"
+                    onClick={() => {
+                        localStorage.removeItem("aiconvo");
+                        setMessages([
+                            {
+                                id: "welcome_message",
+                                role: "assistant",
+                                parts: [
+                                    {
+                                        type: "text",
+                                        text: "Hi! I'm Matthew's AI assistant. I can answer questions about his experience, explain how his projects work, and help you determine whether he's a good fit for your team.",
+                                    },
+                                ],
+                            },
+                        ]);
+                    }}
+                >
+                    New chat
+                </button>
+            </div>
             <div className="relative flex-1 min-h-0">
-                <div ref={scrollContainerRef} className="overflow-auto scrollbar-none w-full h-full p-4">
-                {messages.map((m, index) => {
-
-                    if (index !== messages.length - 1 || m.role !== "assistant") {
+                <div ref={scrollContainerRef} className="overflow-auto scrollbar-none w-full h-full px-4 py-6">
+                    {messages.map((m, index) => {
+                        const isLatestAssistant = index === messages.length - 1 && m.role === "assistant";
+                        const showIfLatest = isLatestAssistant && (status === "ready" || status === "streaming") && m.parts.some(part => part.type === "text");
+                        if (!(index !== messages.length - 1 || m.role !== "assistant") && !showIfLatest) {
+                            if (index !== messages.length - 1 || m.role !== "assistant") {
+                                return null;
+                            }
+                        }
 
                         return (
-                            <div className='flex flex-row gap-2' key={index}>
-
-                                {m.role === "assistant" &&
-                                    <Image src={aiSVG} width={30} height={30} alt="send button svg" />
-                                }
-                                <div className={`flex flex-col ${m.role === 'assistant' ? "" : "ml-auto"
-                                    }`}>
-                                    <div key={index} className={`${m.role === "assistant" ? "bg-[#2A2A2E] w-full max-w-full min-w-0" : "bg-blue-700 ml-auto w-fit max-w-100"} rounded-2xl p-2 mt-3 text-left prose prose-invert max-w-none text-white`}>{m.parts.map((part, partIndex) => {
-                                        if (part.type !== "text") {
-                                            return null;
-                                        }
-
-                                        return <ReactMarkdown key={partIndex} remarkPlugins={[remarkGfm]}>{part.text}</ReactMarkdown>
-                                    })}
+                            <motion.div
+                                key={index}
+                                initial={{ opacity: 0, y: 8 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.25, ease: "easeOut" }}
+                                className={`flex flex-row gap-3 ${m.role === "assistant" ? "justify-start" : "justify-end"}`}
+                            >
+                                {m.role === "assistant" && (
+                                    <div className="mt-3 flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full border border-white/10 bg-[#0f0f0f]">
+                                        <Image src={aiSVG} width={20} height={20} alt="AI assistant" />
+                                    </div>
+                                )}
+                                <div className={`flex max-w-[85%] flex-col sm:max-w-[72%] ${m.role === "assistant" ? "" : "items-end"}`}>
+                                    <div
+                                        className={`mt-3 rounded-2xl px-4 py-3 text-left shadow-sm ${m.role === "assistant"
+                                            ? "border border-white/10 bg-[#1a1a1a] text-white"
+                                            : "bg-[var(--color-accent)] text-white"
+                                            }`}
+                                    >
+                                        <div className="prose prose-invert max-w-none prose-p:my-2 prose-ul:my-2 prose-ol:my-2 prose-pre:bg-black/30 prose-pre:border prose-pre:border-white/10">
+                                            {m.parts.map((part, partIndex) => {
+                                                if (part.type !== "text") {
+                                                    return null;
+                                                }
+                                                return <ReactMarkdown key={partIndex} remarkPlugins={[remarkGfm]}>{part.text}</ReactMarkdown>
+                                            })}
+                                        </div>
                                     </div>
                                     <MessageSources m={m} />
                                 </div>
-
-                            </div>
+                            </motion.div>
                         )
-                    }
+                    })}
 
-                    else if (m.role === "assistant" && (status === "ready" || status === "streaming") && m.parts.filter(m => m.type === "text").length > 0) {
-                        return (
-
-                            <div className='flex flex-row gap-2' key={index}>
-
-                                <Image src={aiSVG} width={30} height={30} alt="send button svg" />
-
-                                <div className='flex flex-col'>
-                                    <div className={`bg-[#2A2A2E] w-full max-w-full min-w-0 rounded-2xl p-2 mt-3 text-left prose prose-invert text-white`}>{m.parts.map((part, partIndex) => {
-                                        if (part.type !== "text") {
-                                            return null;
-                                        }
-
-                                        return <ReactMarkdown key={partIndex} remarkPlugins={[remarkGfm]}>{part.text}</ReactMarkdown>
-                                    })}
-                                    </div>
-
-                                    <MessageSources m={m} />
-
-                                </div>
-                            </div>
-
-                        )
-                    }
-                })
-                }
-
-                <div ref={bottomRef}></div>
+                    <div ref={bottomRef}></div>
                 </div>
                 {showGoToBottom && (
                     <button
                         type="button"
                         onClick={scrollToBottom}
-                        className="absolute bottom-4 right-4 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold py-2 px-4 rounded-full shadow-lg"
+                        className="absolute bottom-4 right-4 rounded-full border border-white/15 bg-[#0f0f0f] px-4 py-2 text-sm font-medium text-white shadow-lg transition-colors duration-150 ease-in-out hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-[var(--color-accent)]/40"
                     >
                         Go to bottom
                     </button>
                 )}
             </div>
-            {status !== "ready" && !error ?
-                <div className='flex flex-row gap-2 ml-4'>
-                    <Image src={aiSVG} width={30} height={30} alt="send button svg" />
-                    <div className='text-left bg-[#2A2A2E] flex flex-row w-8 gap-1 rounded-2xl items-center justify-center'>
-
-                        <div className='animate-bounce [animation-delay:0ms]'>.</div>
-                        <div className='animate-bounce [animation-delay:150ms]'>.</div>
-                        <div className='animate-bounce [animation-delay:300ms]'>.</div>
+            {status !== "ready" && !error ? (
+                <div className="ml-4 flex flex-row items-center gap-3">
+                    <div className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full border border-white/10 bg-[#0f0f0f]">
+                        <Image src={aiSVG} width={20} height={20} alt="AI assistant" />
                     </div>
-                </div> : ""}
+                    <div className="flex h-9 w-14 items-center justify-center gap-1 rounded-full border border-white/10 bg-[#1a1a1a]">
+                        <div className="animate-bounce [animation-delay:0ms]">.</div>
+                        <div className="animate-bounce [animation-delay:150ms]">.</div>
+                        <div className="animate-bounce [animation-delay:300ms]">.</div>
+                    </div>
+                </div>
+            ) : (
+                ""
+            )}
             <div className='mt-2'></div>
 
             <div className='flex flex-col text-[18px] gap-2 mt-auto items-center w-full justify-center'>
-                {status === 'ready' &&
-                    <div className="flex flex-row text-[12px] sm:text-[18px] my-4 gap-2">
-                        <motion.button onClick={() => {
-                            setInputValue("What education does Matthew have?")
-                            SendInput("What education does Matthew have?")
-                        }} whileHover={{ scale: 1.05, borderColor: "rgb(34, 197, 188)" }} className='bg-blue-800 hover: scale-3d rounded-2xl p-1 border-4'>What education does Matthew have?</motion.button>
-                        <motion.button onClick={() => {
-                            setInputValue("What is Matthew's work experience?")
-                            SendInput("What is Matthew's work experience?")
-                        }} whileHover={{ scale: 1.05, borderColor: "rgb(34, 197, 188)" }} className='bg-blue-800 hover: scale-3d rounded-2xl p-1 border-4'>What is Matthew's work experience?</motion.button>
-                        <motion.button onClick={() => {
-                            setInputValue("What technologies is Matthew proficient in?")
-                            SendInput("What technologies is Matthew proficient in?");
-                        }} whileHover={{ scale: 1.05, borderColor: "rgb(34, 197, 188)" }} className='bg-blue-800 hover: scale-3d rounded-2xl p-1 border-4'>What technologies is Matthew proficient in?</motion.button>
+                {status === 'ready' && (
+                    <div className="flex flex-wrap items-center justify-center gap-2 px-4">
+                        <motion.button
+                            onClick={() => {
+                                setInputValue("What did Matthew build at Sorenson?")
+                                SendInput("What did Matthew build at Sorenson?")
+                            }}
+                            whileHover={{ scale: 1.02 }}
+                            className="inline-flex items-center rounded-full border border-white/15 bg-white/5 px-4 py-2 text-xs text-white transition-colors duration-150 ease-in-out hover:bg-white/10 sm:text-sm"
+                        >
+                            What did Matthew build at Sorenson?
+                        </motion.button>
+                        <motion.button
+                            onClick={() => {
+                                setInputValue("What AI projects has Matthew built?")
+                                SendInput("What AI projects has Matthew built?")
+                            }}
+                            whileHover={{ scale: 1.02 }}
+                            className="inline-flex items-center rounded-full border border-white/15 bg-white/5 px-4 py-2 text-xs text-white transition-colors duration-150 ease-in-out hover:bg-white/10 sm:text-sm"
+                        >
+                            What AI projects has Matthew built?
+                        </motion.button>
+                        <motion.button
+                            onClick={() => {
+                                setInputValue("What technologies does Matthew work with?")
+                                SendInput("What technologies does Matthew work with?")
+                            }}
+                            whileHover={{ scale: 1.02 }}
+                            className="inline-flex items-center rounded-full border border-white/15 bg-white/5 px-4 py-2 text-xs text-white transition-colors duration-150 ease-in-out hover:bg-white/10 sm:text-sm"
+                        >
+                            What technologies does Matthew work with?
+                        </motion.button>
+                        <motion.button
+                            onClick={() => {
+                                setInputValue("Tell me about Travel Planner.")
+                                SendInput("Tell me about Travel Planner.")
+                            }}
+                            whileHover={{ scale: 1.02 }}
+                            className="inline-flex items-center rounded-full border border-white/15 bg-white/5 px-4 py-2 text-xs text-white transition-colors duration-150 ease-in-out hover:bg-white/10 sm:text-sm"
+                        >
+                            Tell me about Travel Planner.
+                        </motion.button>
                     </div>
-                }
-                <div className=' max-w-200 w-full flex flex-row bg-amber-800 rounded-2xl h-fit min-h-10 p-3'>
-                    <textarea onKeyDown={(e) => {
-                        if (e.key === "Enter") {
-                            e.preventDefault();
+                )}
+                <div className="mx-auto flex w-full max-w-2xl flex-row items-end gap-2 rounded-2xl border border-white/15 bg-[#1a1a1a] px-4 py-2 shadow-sm">
+                    <textarea
+                        onKeyDown={(e) => {
+                            if (e.key === "Enter") {
+                                e.preventDefault();
+                                SendInput();
+                            }
+                        }}
+                        className="max-h-40 min-h-10 w-full resize-none bg-transparent text-sm text-white outline-none field-sizing-content scrollbar-none placeholder:text-white/40 sm:text-base"
+                        value={inputValue}
+                        onChange={(e) => setInputValue(e.target.value)}
+                        placeholder="Ask about Matthew's experience, projects, or skills..."
+                    />
+                    <button
+                        className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-md bg-[var(--color-accent)] text-white transition-colors duration-150 ease-in-out hover:bg-[var(--color-accent)]/90 focus:outline-none focus:ring-2 focus:ring-[var(--color-accent)]/40 disabled:opacity-50"
+                        onClick={() => {
                             SendInput();
-                        }
-                    }} className='w-full outline-none text-wrap scrollbar-none field-sizing-content resize-none' value={inputValue} onChange={(e) => setInputValue(e.target.value)} />
-                    <button className='flex flex-col items-center justify-center' onClick={(e) => {
-                        SendInput();
-                    }}>
-                        <Image src={sendSVG} width={30} height={30} alt="send button svg" />
+                        }}
+                        disabled={status !== "ready"}
+                        aria-label="Send message"
+                    >
+                        <Image src={sendSVG} width={18} height={18} alt="Send message" />
                     </button>
                 </div>
                 <div className={`${inputError ? 'mt-2' : ''} text-red-600`}>{inputError}</div>
