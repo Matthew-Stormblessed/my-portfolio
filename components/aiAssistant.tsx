@@ -51,7 +51,7 @@ export default function AiAssistant() {
     }
 
     useEffect(() => {
-        if (status === "ready" || status === "streaming") {
+        if (status === "streaming") {
             scrollToBottom();
         }
     }, [status]);
