@@ -39,6 +39,8 @@ export default function AiAssistant() {
     } = useChat<ChatMessage>({
         transport: new DefaultChatTransport({
             api: "/api/chat",
+            // Send a bounded recent window so long-lived chats stay within the server's request budget.
+            prepareSendMessagesRequest: ({ messages, body }) => ({ body: { ...body, messages: messages.slice(-20) } }),
         }),
         messages: welcomeMessages,
         onError(err) {
@@ -299,6 +301,10 @@ export default function AiAssistant() {
                     </button>
                 </div>
                 <div className={`${inputError ? 'mt-2' : ''} text-red-600`}>{inputError}</div>
+                {/* Tell visitors their messages are retained so they can avoid entering sensitive personal information. */}
+                <p className="px-4 pb-3 text-center text-xs text-white/45">
+                    Questions and replies are stored so Matthew can review and improve the assistant. Please don’t include sensitive personal information.
+                </p>
             </div>
 
         </div>

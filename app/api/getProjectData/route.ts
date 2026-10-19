@@ -1,5 +1,4 @@
 import { NextResponse } from "next/server";
-import fs from "fs";
 import portfolioAssistant from "@/app/data/PortfolioAssistant.json";
 import popChoice from "@/app/data/PopChoice.json";
 import travelAgent from "@/app/data/TravelAgent.json";

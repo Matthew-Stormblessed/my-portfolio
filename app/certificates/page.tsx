@@ -1,6 +1,7 @@
 "use client";
 
 import Navbar from "@/components/navbar";
+import Image from "next/image";
 import { motion } from "motion/react";
 
 type Certificate = {
@@ -94,8 +95,11 @@ export default function Certificates() {
                 transition={{ duration: 0.4, ease: "easeOut", delay: index * 0.05 }}
                 className="overflow-hidden rounded-xl border border-white/10 bg-[#0f0f0f] shadow-lg transition-colors duration-200 ease-in-out hover:border-[var(--color-accent)]/40"
               >
-                <img
+                {/* Use the Next image pipeline to optimize public certificate previews before delivery. */}
+                <Image
                   src={certificate.image}
+                  width={1200}
+                  height={750}
                   alt={`${certificate.title} certificate`}
                   className="aspect-[16/10] w-full bg-[#0a0a0a] object-contain p-4"
                 />

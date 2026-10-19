@@ -2,16 +2,8 @@ import 'dotenv/config';
 import { test, expect } from '@playwright/test';
 
 
-// Determine the base URL based on the environment variable
-let baseURL;
-
-// If the environment variable NEXT_PUBLIC_LOCAL_DEV is not set, use the production URL
-// Otherwise, use the local development URL
-if (!process.env.NEXT_PUBLIC_LOCAL_DEV) {
-  baseURL = 'https://matthew-johnson-portfolio.netlify.app/';
-} else {
-  baseURL = 'http://localhost:3000/';
-}
+// Point every smoke check at the local server so CI never depends on the live site.
+const baseURL = 'http://localhost:3000/';
 
 test('has title', async ({ page }) => {
   await page.goto(baseURL);

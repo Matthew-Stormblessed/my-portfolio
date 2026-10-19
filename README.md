@@ -45,11 +45,25 @@ SUPABASE_SERVICE_ROLE_KEY=
 UPSTASH_REDIS_REST_URL=
 UPSTASH_REDIS_REST_TOKEN=
 
-# Optional: GitHub Actions page (client-side API calls)
-NEXT_PUBLIC_GITHUB_TOKEN=
+# Optional email alerts for completed AI chat interactions (Mailgun)
+MAILGUN_API_KEY=
+MAILGUN_DOMAIN=mg.your-domain.com
+# Use https://api.eu.mailgun.net if the Mailgun sending domain is in the EU region.
+MAILGUN_API_BASE_URL=https://api.mailgun.net
+CHAT_USAGE_NOTIFICATION_FROM="Portfolio Alerts <alerts@mg.your-domain.com>"
+CHAT_USAGE_NOTIFICATION_TO=matthewisaacjohnson@gmail.com
+
+# Optional: GitHub Actions API token (server-side only)
+GITHUB_TOKEN=
 ```
 
-The AI chat endpoint requires OpenAI, Supabase, and Upstash. Other pages work without them.
+The AI chat endpoint requires OpenAI, Supabase, and Upstash. Other pages work without them. Usage email alerts also require a Mailgun domain sending key, a sending domain, and a sender address accepted by Mailgun; without those values, chat continues normally and no email is sent. Use Mailgun's domain-scoped sending key for least privilege and match `MAILGUN_API_BASE_URL` to the region where the domain is configured.
+
+### Reviewing AI chat transcripts
+
+Apply `supabase/migrations/20261016000000_chat_transcripts.sql` in the Supabase SQL Editor. Each interaction stores only its latest user question, the assistant response, status, duration, and a broad failure category. The table is unavailable to browser roles; review rows in the Supabase dashboard. Rows are marked to expire after 90 days. To enforce deletion automatically, enable `pg_cron` in Supabase and run the commented `cron.schedule` statement at the end of the migration.
+
+Set `MAILGUN_API_KEY`, `MAILGUN_DOMAIN`, `CHAT_USAGE_NOTIFICATION_FROM`, and `CHAT_USAGE_NOTIFICATION_TO` in the deployment environment to receive one content-free email after each successfully stored answer. Set `MAILGUN_API_BASE_URL` for EU domains; US domains use `https://api.mailgun.net`. The alert contains the completion time and request ID, not the transcript. Failed and interrupted interactions are stored but do not send an email alert.
 
 ## Knowledge base
 
@@ -96,16 +110,10 @@ Run this whenever you change knowledge content or add new pages (like certificat
 
 ## Testing
 
-Playwright smoke tests cover page navigation and static content. By default they run against the production site:
+Playwright smoke tests cover page navigation and static content. They start a local development server automatically:
 
 ```bash
 npx playwright test
-```
-
-To test against a local dev server, set `NEXT_PUBLIC_LOCAL_DEV=1` and start the dev server first:
-
-```bash
-NEXT_PUBLIC_LOCAL_DEV=1 npx playwright test
 ```
 
 ## Project structure

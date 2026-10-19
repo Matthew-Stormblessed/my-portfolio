@@ -15,5 +15,6 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-      - run: npm i
+      # Use the lockfile exactly so CI does not resolve different dependency versions on each run.
+      - run: npm ci
       - run: npm run build

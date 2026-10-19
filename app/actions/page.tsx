@@ -12,21 +12,9 @@ type WorkflowRun = {
   created_at: string;
 };
 
-const GITHUB_USERNAME = "Matthew-Stormblessed";
-const REPO_NAME = "my-portfolio";
-const GITHUB_TOKEN = process.env.NEXT_PUBLIC_GITHUB_TOKEN;
-
 async function fetchWorkflowRuns(): Promise<WorkflowRun[]> {
-  const res = await fetch(
-    `https://api.github.com/repos/${GITHUB_USERNAME}/${REPO_NAME}/actions/runs?per_page=10`,
-    {
-      headers: {
-        Authorization: `Bearer ${GITHUB_TOKEN}`,
-        Accept: "application/vnd.github+json",
-      },
-      cache: "no-store",
-    }
-  );
+  // Fetch through the cached server route so GitHub credentials never reach visitor browsers.
+  const res = await fetch("/api/github-runs");
   if (!res.ok) throw new Error("Failed to fetch workflow runs");
   const data = await res.json();
   return data.workflow_runs;
@@ -49,7 +37,8 @@ export default function ActionsPage() {
       })
       .catch((err) => {
         if (isMounted) {
-          setError(err.message);
+          // Expose a stable message because raw upstream errors may contain implementation details.
+          setError("Unable to load workflow runs. Please try again later.");
           setLoading(false);
         }
       });
