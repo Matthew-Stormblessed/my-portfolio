@@ -21,7 +21,7 @@ export default function Projects() {
                         description="Built an AI-powered recruiter assistant that answers questions about my experience, projects, and technical skills using semantic retrieval and a curated portfolio knowledge base."
                         githubUrl="https://github.com/Matthew-Stormblessed/my-portfolio"
                         projectWebsite="https://matthew-johnson-portfolio.netlify.app"
-                        image="/portfolioAssistant.png"
+                        image="/portfolioAssistant.jpg"
                         dataFile="PortfolioAssistant.json"
                     />
                      <ProjectCard

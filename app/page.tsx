@@ -24,7 +24,7 @@ const featuredProjects = [
   {
     title: portfolioAssistant.title,
     description: portfolioAssistant.description,
-    image: portfolioAssistant.images?.[0] ?? "/portfolioAssistant.png",
+    image: portfolioAssistant.images?.[0] ?? "/portfolioAssistant.jpg",
     dataFile: "PortfolioAssistant.json",
     techStack: portfolioAssistant.techStack,
     projectWebsite: portfolioAssistant.projectWebsite,
