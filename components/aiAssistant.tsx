@@ -104,7 +104,8 @@ export default function AiAssistant() {
     async function SendInput(value?: string) {
         clearError();
         setInputError("");
-        if ((inputValue.trim() === "" && !value) || status !== "ready") return;
+        // Ignore duplicate sends only while a request is pending or the assistant is streaming its reply.
+        if ((inputValue.trim() === "" && !value) || status === "submitted" || status === "streaming") return;
         if (inputValue.length > 1000) {
             setInputValue("");
             setInputError("Please keep questions under 1000 characters");
@@ -294,7 +295,8 @@ export default function AiAssistant() {
                         onClick={() => {
                             SendInput();
                         }}
-                        disabled={status !== "ready"}
+                        // Keep the send control available after errors so visitors can retry without reloading.
+                        disabled={status === "streaming"}
                         aria-label="Send message"
                     >
                         <Image src={sendSVG} width={18} height={18} alt="Send message" />
