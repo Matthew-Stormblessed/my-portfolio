@@ -21,7 +21,7 @@ export default async function SingleProject({
   const data = dataFile ? projectData[dataFile] : undefined;
 
   return (
-    <main className="min-h-screen bg-gray-900 text-white px-6 py-16">
+    <main className="min-h-screen bg-[#050505] text-white px-6 py-16">
       <Navbar />
       {data ? (
         <SingleProjectContent data={data} />

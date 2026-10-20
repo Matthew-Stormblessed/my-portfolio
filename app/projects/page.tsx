@@ -11,7 +11,7 @@ export default function Projects() {
                 <meta name="description" content="Portfolio of Matthew Johnson" />
             </Head>
 
-            <main className="min-h-screen bg-gray-900 text-white px-6 py-16">
+            <main className="min-h-screen bg-[#050505] text-white px-6 py-16">
                 <Navbar />
                 <div>
                     <h1 className="text-3xl font-bold mb-8 mt-3 flex justify-center">My projects</h1>
